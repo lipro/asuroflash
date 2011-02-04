@@ -11,3 +11,7 @@ asuroflash_SOURCES = \
 	Serial.cpp \
 	Serial.h
 
+EXTRA_DIST = \
+	WinSerial.cpp \
+	WinSerial.h
+

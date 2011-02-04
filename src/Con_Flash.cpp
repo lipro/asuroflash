@@ -23,7 +23,7 @@
 
 #include "ANSIAsuro.h"
 #ifdef WINDOWS
-#include "stdafx.h"
+#include <windows.h>
 #endif
 
 #include <stdio.h>
@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
 	std::cout << std::endl << ASUROAbout << std::endl;
 #ifdef WINDOWS
 	std::cout << "Microsoft Version" << std::endl << std::endl;
+	std::cout << "FIXME: not operational serial interface" << std::endl << std::endl;
 	char* tmp = strrchr(argv[0],'\\');
 	strncpy(Asuro.m_ASUROIniPath,argv[0],strlen(argv[0]) - strlen(tmp) + 1);
 #elif defined LINUX
