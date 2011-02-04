@@ -164,3 +164,25 @@ AC_CONFIG_FILES([
 	src/Makefile
 ])
 AC_OUTPUT
+
+# ==========================================================================
+AS_AC_EXPAND(EXPANDED_BINDIR, "$bindir")
+
+echo "
+ ---{ $PACKAGE_NAME $VERSION }---
+
+    prefix:                     ${prefix}
+    bindir:                     ${EXPANDED_BINDIR}
+    C Compiler:                 ${CC}
+    CFLAGS:                     ${CFLAGS}
+    Enable GTK 2.0:             ${HAVE_GTK}
+    Enable GTK 3.0:             ${HAVE_GTK3}
+    Enable QT3:                 ${HAVE_QT3}
+    Enable QT4:                 ${HAVE_QT4}
+"
+
+echo "\
+    Building asuroflash         yes
+    Building qasuroflash        ${HAVE_QT3}
+    Building gasuroflash        ${HAVE_GTK}
+"
