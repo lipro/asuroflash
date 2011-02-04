@@ -44,27 +44,27 @@
 
 class CWinSerial : public CSerial
 {
-public:
-	CWinSerial();
-	virtual ~CWinSerial();
-	bool Open(char* port);
-	void Close(void);
-  bool Scan(char* port, unsigned short number, unsigned short mode);
-	void ClearBuffer(void);
-	int Read(char* data, unsigned int length);
-	int Write(char* data, unsigned int length);
-	void Timeout(unsigned int timeout); //msec
+	public:
+		CWinSerial();
+		virtual ~CWinSerial();
+		bool Open(char* port);
+		void Close(void);
+		bool Scan(char* port, unsigned short number, unsigned short mode);
+		void ClearBuffer(void);
+		int Read(char* data, unsigned int length);
+		int Write(char* data, unsigned int length);
+		void Timeout(unsigned int timeout); //msec
 
-protected :
-  int m_portHandle;
-// TODO: adapot function to Windows
+	protected :
+		int m_portHandle;
+		// TODO: adapot function to Windows
 #if 0
-  struct termios CommConfig;
+		struct termios CommConfig;
 #endif
-	
-private :
-	void MyMessageBox(char* Text);
-	char m_portName[256];
+
+	private :
+		void MyMessageBox(char* Text);
+		char m_portName[256];
 
 };
 #endif

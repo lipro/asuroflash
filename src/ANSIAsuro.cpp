@@ -41,7 +41,7 @@ CANSIAsuro::~CANSIAsuro()
 
 void CANSIAsuro::Progress(unsigned int progress)
 {
- std::cout << "." << std::flush;
+	std::cout << "." << std::flush;
 }
 
 void CANSIAsuro::TimeWait(unsigned int time) // msec

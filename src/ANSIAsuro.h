@@ -27,16 +27,16 @@
 
 class CANSIAsuro : public CAsuro  
 {
-public:
-	CANSIAsuro();
-	virtual ~CANSIAsuro();
-	void MessageText(char* text);
-	void WarningText(char* text);
-	void SuccessText (char* text);
-	void ErrorText(char* text);
-	void Progress(unsigned int progress);
-	void TimeWait(unsigned int time); // msec
+	public:
+		CANSIAsuro();
+		virtual ~CANSIAsuro();
+		void MessageText(char* text);
+		void WarningText(char* text);
+		void SuccessText (char* text);
+		void ErrorText(char* text);
+		void Progress(unsigned int progress);
+		void TimeWait(unsigned int time); // msec
 
-	char m_iniPathName[1024];
+		char m_iniPathName[1024];
 };
 #endif

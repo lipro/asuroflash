@@ -28,10 +28,6 @@
 #define WINDOWS
 #endif
 
-
-
-
-
 #if defined LINUX || defined _LINUX || defined _LINUX_
 #define LINUX
 #endif
@@ -47,11 +43,14 @@
 
 #define HEX_HEADER 1+2+4+2+2 // : + recordLength + address + type + chksum
 
-static const char*  ASUROAbout = "ASURO Flash Tool\n\
+static const char*  ASUROAbout = "\
+ASURO Flash Tool\n\
 Version 1.2\n\
 Author: Jan Grewe\n\
-(c)DLR 2003-20004";
-static const char*  LICENSE = "ASURO Flash Copyright (c)2003-2004 DLR RM\n\
+(c)DLR 2003-2004";
+
+static const char*  LICENSE = "\
+ASURO Flash Copyright (c)2003-2004 DLR RM\n\
 ASURO Flash comes with\n\
 ABSOLUTELY NO WARRANTY \n\
 This program is free software\n\
@@ -65,42 +64,42 @@ or any later version\n";
 
 class CAsuro  
 {
-public:
-	void Programm (void);
-	bool InitCAsuro(void);
-  bool PortScan(char*,unsigned short, unsigned short);
-	CAsuro();
-	virtual ~CAsuro();
+	public:
+		void Programm (void);
+		bool InitCAsuro(void);
+		bool PortScan(char*,unsigned short, unsigned short);
+		CAsuro();
+		virtual ~CAsuro();
 
-	virtual void Status(char*) {};
-	virtual void MessageText(char*) {};
-	virtual void WarningText(char*) {};
-	virtual void SuccessText (char*) {};
-	virtual void ErrorText(char*) {};
-	virtual void Progress(unsigned int) {};
-	virtual void ViewUpdate(void) {};
-	virtual void TimeWait(unsigned int time) = 0; // msec
+		virtual void Status(char*) {};
+		virtual void MessageText(char*) {};
+		virtual void WarningText(char*) {};
+		virtual void SuccessText (char*) {};
+		virtual void ErrorText(char*) {};
+		virtual void Progress(unsigned int) {};
+		virtual void ViewUpdate(void) {};
+		virtual void TimeWait(unsigned int time) = 0; // msec
 
-private:
-	bool SendPage(void);
-	bool BuildRAM(void);
-	bool Connect(void);
-	bool Init(void);
-	unsigned int CRC16 (unsigned int crc, unsigned char data);
-	char readLine(char* line, FILE* fp);
+	private:
+		bool SendPage(void);
+		bool BuildRAM(void);
+		bool Connect(void);
+		bool Init(void);
+		unsigned int CRC16 (unsigned int crc, unsigned char data);
+		char readLine(char* line, FILE* fp);
 
-public:
-	bool m_ASUROCancel;
-	char m_ASUROCOMPort[255];
-	char m_ASUROfileName[1024];
-	char m_ASUROIniPath[1024];
+	public:
+		bool m_ASUROCancel;
+		char m_ASUROCOMPort[255];
+		char m_ASUROfileName[1024];
+		char m_ASUROIniPath[1024];
 
-private:
-	unsigned int m_TimeoutFlash;	// sec
-	unsigned int m_TimeoutConnect;  // sec
-	unsigned int m_MaxTry;
+	private:
+		unsigned int m_TimeoutFlash;	// sec
+		unsigned int m_TimeoutConnect;  // sec
+		unsigned int m_MaxTry;
 
-	unsigned int m_startPage,m_endPage;
-	unsigned char m_RAM[MAX_PAGE][PAGE_SIZE - 3]; //-1PageNo -2CRC16 
+		unsigned int m_startPage,m_endPage;
+		unsigned char m_RAM[MAX_PAGE][PAGE_SIZE - 3]; //-1PageNo -2CRC16 
 };
 #endif

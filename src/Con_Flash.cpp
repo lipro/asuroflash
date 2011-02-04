@@ -20,7 +20,6 @@
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
  ***************************************************************************/ 
-
 #include "ANSIAsuro.h"
 #ifdef WINDOWS
 #include <windows.h>
@@ -37,7 +36,7 @@ CANSIAsuro Asuro;
 
 int main(int argc, char* argv[])
 {
-  std::cout << LICENSE << std::endl;
+	std::cout << LICENSE << std::endl;
 	std::cout << std::endl << ASUROAbout << std::endl;
 #ifdef WINDOWS
 	std::cout << "Microsoft Version" << std::endl << std::endl;
@@ -81,10 +80,10 @@ int main(int argc, char* argv[])
 		else {
 #ifdef LINUX
 			std::cout << "Start ASURO Flash on " << Asuro.m_ASUROCOMPort << 
-			" flashing " << Asuro.m_ASUROfileName << std::endl;
+				" flashing " << Asuro.m_ASUROfileName << std::endl;
 #elif defined WINDOWS
 			std::cout << "Start ASURO Flash on " << Asuro.m_ASUROCOMPort << 
-			" flashing " << Asuro.m_ASUROfileName << std::endl;
+				" flashing " << Asuro.m_ASUROfileName << std::endl;
 #endif
 			Asuro.InitCAsuro();
 		}

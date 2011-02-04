@@ -45,24 +45,24 @@
 
 class CPosixSerial : public CSerial
 {
-public:
-	CPosixSerial();
-	virtual ~CPosixSerial();
-	bool Open(char* port);
-	void Close(void);
-  bool Scan(char* port, unsigned short number, unsigned short mode);
-	void ClearBuffer(void);
-	int Read(char* data, unsigned int length);
-	int Write(char* data, unsigned int length);
-	void Timeout(unsigned int timeout); //msec
+	public:
+		CPosixSerial();
+		virtual ~CPosixSerial();
+		bool Open(char* port);
+		void Close(void);
+		bool Scan(char* port, unsigned short number, unsigned short mode);
+		void ClearBuffer(void);
+		int Read(char* data, unsigned int length);
+		int Write(char* data, unsigned int length);
+		void Timeout(unsigned int timeout); //msec
 
-protected :
-  int m_portHandle;
-  struct termios CommConfig;
-	
-private :
-	void MyMessageBox(char* Text);
-	char m_portName[256];
+	protected :
+		int m_portHandle;
+		struct termios CommConfig;
+
+	private :
+		void MyMessageBox(char* Text);
+		char m_portName[256];
 
 };
 #endif

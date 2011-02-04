@@ -57,43 +57,43 @@ class QComboBox;
 
 class QT_FlashDialog : public QDialog, public CAsuro
 { 
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    QT_FlashDialog( QWidget* parent = 0, const char* name = 0, bool modal = FALSE,
-    			WFlags fl = WStyle_Customize | WStyle_DialogBorder | WStyle_Title | WStyle_SysMenu | WStyle_Minimize);
-    ~QT_FlashDialog();
+	public:
+		QT_FlashDialog( QWidget* parent = 0, const char* name = 0, bool modal = FALSE,
+				WFlags fl = WStyle_Customize | WStyle_DialogBorder | WStyle_Title | WStyle_SysMenu | WStyle_Minimize);
+		~QT_FlashDialog();
 
-    QLabel* PixmapLabel1;
-    QLabel* ABOUT;
-    QLineEdit* FILE;
-    QLabel* STATUS;
-    QProgressBar* PROGRESSBAR;
-    QTextView* TEXT;
-    QPushButton* EXIT;
-    QComboBox* PORT;
-    QLineEdit* PORT_TEXT;
-    QPushButton* BROWSE;
-    QPushButton* PROGRAMM;
-  
-	QString m_fileName,m_portName,m_msg;
-	unsigned char m_Port;
-	void Status(char* text);
-	void MessageText(char* text);
-	void WarningText(char* text);
-	void SuccessText (char* text);
-	void ErrorText(char* text);
-	void Progress(unsigned int progress);
-	void ViewUpdate(void);
-	void TimeWait(unsigned int time); // msec
+		QLabel* PixmapLabel1;
+		QLabel* ABOUT;
+		QLineEdit* FILE;
+		QLabel* STATUS;
+		QProgressBar* PROGRESSBAR;
+		QTextView* TEXT;
+		QPushButton* EXIT;
+		QComboBox* PORT;
+		QLineEdit* PORT_TEXT;
+		QPushButton* BROWSE;
+		QPushButton* PROGRAMM;
 
-public slots:
-     void slotCancel(void);
-     void slotBrowse(void);
-     void slotPort(int);
-     void slotProgramm(void);
-     void slotNewPort (const QString &);
-     void slotNewFileName (const QString &);
+		QString m_fileName,m_portName,m_msg;
+		unsigned char m_Port;
+		void Status(char* text);
+		void MessageText(char* text);
+		void WarningText(char* text);
+		void SuccessText (char* text);
+		void ErrorText(char* text);
+		void Progress(unsigned int progress);
+		void ViewUpdate(void);
+		void TimeWait(unsigned int time); // msec
+
+		public slots:
+			void slotCancel(void);
+		void slotBrowse(void);
+		void slotPort(int);
+		void slotProgramm(void);
+		void slotNewPort (const QString &);
+		void slotNewFileName (const QString &);
 };
 
 #endif // FLASH_H

@@ -29,17 +29,17 @@
 
 class CSerial  
 {
-public:
-	CSerial();
-	virtual ~CSerial();
-	virtual bool Open(char* port) = 0;
-	virtual void Close(void) = 0;
-  virtual bool Scan(char* port, unsigned short number, unsigned short mode) = 0;
-	virtual void ClearBuffer(void) = 0;
-	virtual int Read(char* data, unsigned int length) = 0;
-	virtual int Write(char* data, unsigned int length) = 0;
-	virtual void Timeout(unsigned int timeout) = 0; //msec 
-	char m_Port[255];
+	public:
+		CSerial();
+		virtual ~CSerial();
+		virtual bool Open(char* port) = 0;
+		virtual void Close(void) = 0;
+		virtual bool Scan(char* port, unsigned short number, unsigned short mode) = 0;
+		virtual void ClearBuffer(void) = 0;
+		virtual int Read(char* data, unsigned int length) = 0;
+		virtual int Write(char* data, unsigned int length) = 0;
+		virtual void Timeout(unsigned int timeout) = 0; //msec 
+		char m_Port[255];
 };
 
 #endif
