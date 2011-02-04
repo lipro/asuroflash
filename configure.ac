@@ -4,6 +4,7 @@ AM_INIT_AUTOMAKE([1.10 dist-bzip2 dist-zip])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/Con_Flash.cpp])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 BUILDDATE=`date +%Y-%m-%d`
 AC_SUBST(BUILDDATE)
@@ -37,6 +38,11 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 
 # Checks for libraries.
+#REQUIRES_LIBANY="anylib >= 0.0-0"
+#AC_SUBST(REQUIRES_LIBANY)
+#PKG_CHECK_MODULES(anylib, $REQUIRES_LIBANY)
+
+AX_HAVE_QT
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h termios.h unistd.h])
