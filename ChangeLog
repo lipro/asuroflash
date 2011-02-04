@@ -1,0 +1,93 @@
+commit c0a97beef7798b254674147f55092d5d8f40c42e
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 20:36:49 2011 +0100
+
+    add make target for ChangeLog from git log
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit 6d846e3e6cb0b4d8a831a628cb80a5544b2b295e
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 20:20:17 2011 +0100
+
+    add project configuration sumary
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit 35e64436e2288ff619c38ebd4abd7318cd80e1db
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 20:17:07 2011 +0100
+
+    change over to new widget library test
+
+      * remove AX_HAVE_QT macro
+      * add new test for Qt3, Qt4, Gtk+ 2 and Gtk+ 3
+      * enable Qt3 per default for qasuroflash
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit 73f86fb37dcf8c3a2ddbe671497fc7088f23e167
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 19:49:04 2011 +0100
+
+    fix file type dos to unix
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit 23f676067873c8ae98d2398705be1a34e57affca
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 18:13:08 2011 +0100
+
+    add new Qt3 GUI version 1.2 by Jan Grewe
+
+    Add content from http://www.arexx.com/downloads/asuro/asuro_flash_linux_source.zip
+    to src directory and adapt to autotools build environment:
+      * date and time stamp: 2005-11-01 16:51
+      * path: qt_flash/qt_flash
+      * files: main.cpp, picture.h, qt_flashdialog.[cpp,h]
+      * new: Qt3 GUI version
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit 55750a89893e901da3b11978a4754e7401295cb8
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 15:44:35 2011 +0100
+
+    add new console version 1.2 by Jan Grewe
+
+    Add content from http://www.arexx.com/downloads/asuro/asuro_flash_linux_source.zip
+    to src directory and adapt to autotools/MSVS2008 build environment:
+      * date and time stamp: 2004-09-20 21:50
+      * path: con_flash/con_flash
+      * files: *.cpp *.h
+      * new: Port Scan included, find possible interfaces
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit b778663cb320e5851f92d894c4a1bfb4a332cd99
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 14:07:32 2011 +0100
+
+    add MSVS2008 project files
+
+      * VS project in Windows/MSVS2008
+      * add WinSerial.[cpp,h] (copied from PosixSerial.[cpp,h])
+      * leave the not operational part of WinSerial (TODO for future)
+      * remove precompilation header in ANSIAsuro.cpp nad Con_Flash.cpp
+      * add Git ignores
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
+
+commit 7e8611c76486d4e46b16e2445d92dc2f09a9f8c6
+Author: Stephan Linz <linz@li-pro.net>
+Date:	Fri Feb 4 10:40:58 2011 +0100
+
+    initial version
+
+    Add content from http://www.arexx.com/downloads/asuro/asuro_flash.zip
+    to src directory and adapt to autotools:
+      * date and time stamp: 2004-09-22 20:42
+      * path: linux/src/ConsolenFlashv
+      * files: *.cpp *.h
+
+    Signed-off-by: Stephan Linz <linz@li-pro.net>
