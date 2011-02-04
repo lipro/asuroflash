@@ -1,3 +1,10 @@
+# support by:
+#    https://gnunet.org/svn/gnunet-qt/configure.ac
+#    http://git.savannah.gnu.org/cgit/gnokii.git/tree/
+#    http://git.0pointer.de/?p=avahi.git;a=blob_plain;f=configure.ac;hb=HEAD
+
+# use: autoreconf -i
+
 AC_PREREQ([2.63])
 AC_INIT([asuroflash], [1.2-devel], [asuro-bug@li-pro.net])
 AM_INIT_AUTOMAKE([1.10 dist-bzip2 dist-zip])
@@ -15,9 +22,6 @@ AC_CANONICAL_HOST
 CPPFLAGS="-D_CONSOLE $CPPFLAGS"
 
 # Check system type.
-# TODO support more OS, see:
-#    https://gnunet.org/svn/gnunet-qt/configure.ac
-#    http://git.savannah.gnu.org/cgit/gnokii.git/tree/
 AC_MSG_CHECKING([checking system type])
 case "$host_os" in
 linux*)
@@ -42,7 +46,107 @@ AC_PROG_INSTALL
 #AC_SUBST(REQUIRES_LIBANY)
 #PKG_CHECK_MODULES(anylib, $REQUIRES_LIBANY)
 
-AX_HAVE_QT
+#
+# Check for Qt 3
+#
+AC_ARG_ENABLE(qt3,
+	AS_HELP_STRING([--disable-qt3],[Disable building of Qt3 frontend]),
+	[case "${enableval}" in
+		yes) HAVE_QT3=yes ;;
+		no)  HAVE_QT3=no ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-qt3) ;;
+	esac],
+	[HAVE_QT3=yes])
+
+if test "x$HAVE_QT3" = "xyes" ; then
+	PKG_CHECK_MODULES( QT3, [ qt-mt >= 3.0.0 ])
+	AC_SUBST(QT3_CFLAGS)
+	AC_SUBST(QT3_LIBS)
+	QT3_PREFIX="`$PKG_CONFIG --variable=prefix qt-mt`/bin"
+	AC_PATH_PROGS(MOC_QT3, [moc-qt3 moc], no, [$QT3_PREFIX])
+	if test "$MOC_QT3" = no; then
+		AC_MSG_ERROR([Could not find QT3 moc])
+	fi
+	AC_SUBST(MOC_QT3)
+	AC_PATH_PROGS(UIC_QT3, [uic-qt3 uic], no, [$QT3_PREFIX])
+	if test "$UIC_QT3" = no; then
+		AC_MSG_ERROR([Could not find QT3 uic])
+	fi
+	AC_SUBST(UIC_QT3)
+fi
+AM_CONDITIONAL(HAVE_QT3, test "x$HAVE_QT3" = "xyes")
+
+#
+# Check for Qt 4
+#
+AC_ARG_ENABLE(qt4,
+	AS_HELP_STRING([--enable-qt4],[Disable building of Qt4Core frontend]),
+	[case "${enableval}" in
+		yes) HAVE_QT4=yes ;;
+		no)  HAVE_QT4=no ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-qt4) ;;
+	esac],
+	[HAVE_QT4=no])
+
+if test "x$HAVE_QT4" = "xyes" ; then
+	PKG_CHECK_MODULES( QT4, [ QtCore >= 4.0.0 ])
+	AC_SUBST(QT4_CFLAGS)
+	AC_SUBST(QT4_LIBS)
+	QT4_PREFIX="`$PKG_CONFIG --variable=prefix QtCore`/bin"
+	AC_PATH_PROGS(MOC_QT4, [moc-qt4 moc], no, [$QT4_PREFIX])
+	if test "$MOC_QT4" = no; then
+		AC_MSG_ERROR([Could not find QT4 moc])
+	fi
+	AC_SUBST(MOC_QT4)
+	AC_PATH_PROGS(UIC_QT4, [uic-qt4 uic], no, [$QT4_PREFIX])
+	if test "$UIC_QT4" = no; then
+		AC_MSG_ERROR([Could not find QT4 uic])
+	fi
+	AC_SUBST(UIC_QT4)
+fi
+AM_CONDITIONAL(HAVE_QT4, test "x$HAVE_QT4" = "xyes")
+
+#
+# Check for GTK+ 2.0
+#
+AC_ARG_ENABLE(gtk,
+	AS_HELP_STRING([--enable-gtk],[Disable use of GTK+ 2]),
+	[case "${enableval}" in
+		yes) HAVE_GTK=yes ;;
+		no)  HAVE_GTK=no ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-gtk) ;;
+	esac],
+	[HAVE_GTK=no])
+
+if test "x$HAVE_GTK" = "xyes" ; then
+	# Check for GTK 2.0
+	PKG_CHECK_MODULES(GTK20, [ gtk+-2.0 >= 2.14.0 ])
+	AC_SUBST(GTK20_CFLAGS)
+	AC_SUBST(GTK20_LIBS)
+fi
+AM_CONDITIONAL(HAVE_GTK, test "x$HAVE_GTK" = "xyes")
+
+#
+# Check for GTK+ 3.0
+#
+AC_ARG_ENABLE(gtk3,
+	AS_HELP_STRING([--enable-gtk3],[Disable use of GTK+ 3]),
+	[case "${enableval}" in
+		yes) HAVE_GTK3=yes ;;
+		no)  HAVE_GTK3=no ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-gtk3) ;;
+	esac],
+	[HAVE_GTK3=no])
+
+if test "x$HAVE_GTK3" = "xyes" ; then
+	# Check for GTK 3.0
+	PKG_CHECK_MODULES(GTK30, [ gtk+-3.0 ])
+	AC_SUBST(GTK30_CFLAGS)
+	AC_SUBST(GTK30_LIBS)
+fi
+AM_CONDITIONAL(HAVE_GTK3, test "x$HAVE_GTK3" = "xyes")
+
+AM_CONDITIONAL(HAVE_GTK2OR3, test "x$HAVE_GTK3" = "xyes" -o "x$HAVE_GTK" = "xyes" )
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h termios.h unistd.h])

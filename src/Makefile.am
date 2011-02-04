@@ -1,4 +1,4 @@
-bin_PROGRAMS = asuroflash qasuroflash
+bin_PROGRAMS = asuroflash
 
 EXTRA_DIST = \
 	WinSerial.cpp \
@@ -15,11 +15,14 @@ asuroflash_SOURCES = \
 	Serial.cpp \
 	Serial.h
 
+if HAVE_QT3
+bin_PROGRAMS += qasuroflash
+
 qasuroflash_CPPFLAGS = \
-	$(QT_CXXFLAGS)
+	$(QT3_CFLAGS)
 
 qasuroflash_LDADD = \
-	$(QT_LIBS)
+	$(QT3_LIBS)
 
 qasuroflash_SOURCES = \
 	Main.cpp \
@@ -36,15 +39,18 @@ qasuroflash_SOURCES = \
 nodist_qasuroflash_SOURCES = \
 	Qt_FlashDialog.moc.cpp
 
+CLEANFILES = $(nodist_qasuroflash_SOURCES)
+
 # Define special suffices for moc/uic
 SUFFIXES = .ui.h .moc.cpp
 
 # Convert %.ui files into %.ui.h
 .ui.ui.h:
-	$(QT_UIC) $< -o $@
+	$(UIC_QT3) $< -o $@
 
 # Create %.moc.cpp from %.h
 .h.moc.cpp:
-	$(QT_MOC) $< -o $@
+	$(MOC_QT3) $< -o $@
 
-CLEANFILES = $(nodist_qasuroflash_SOURCES)
+endif # HAVE_QT3
+
