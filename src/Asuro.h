@@ -2,8 +2,8 @@
                                    Asuro.h 
                              -------------------
     begin                : Die Aug 12 10:16:57 CEST 2003
-    copyright            : (C) 2003 DLR RM by Jan Grewe
-    email                : jan.grewe@dlr.de
+    copyright            : (C) 2003-2004 DLR RM by Jan Grewe
+    email                : jan.grewe@gmx.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,7 +19,7 @@
 	Ver      date       Author        comment
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
-	1.1	  11.12.2003    Jan Grewe     fixed error m_endPage 
+  1.1   27.08.2004    Jan Grewe     find possible interfaces
  ***************************************************************************/
 #ifndef ASURO_H
 #define ASURO_H
@@ -27,6 +27,10 @@
 #if defined WIN32 || defined _WIN32 || defined _WIN32_
 #define WINDOWS
 #endif
+
+
+
+
 
 #if defined LINUX || defined _LINUX || defined _LINUX_
 #define LINUX
@@ -44,10 +48,10 @@
 #define HEX_HEADER 1+2+4+2+2 // : + recordLength + address + type + chksum
 
 static const char*  ASUROAbout = "ASURO Flash Tool\n\
-Version 1.1\n\
+Version 1.2\n\
 Author: Jan Grewe\n\
-Copyright(c) 2003 DLR";
-static const char*  LICENSE = "ASURO Flash Copyright (c)2003 DLR RM\n\
+(c)DLR 2003-20004";
+static const char*  LICENSE = "ASURO Flash Copyright (c)2003-2004 DLR RM\n\
 ASURO Flash comes with\n\
 ABSOLUTELY NO WARRANTY \n\
 This program is free software\n\
@@ -64,6 +68,7 @@ class CAsuro
 public:
 	void Programm (void);
 	bool InitCAsuro(void);
+  bool PortScan(char*,unsigned short, unsigned short);
 	CAsuro();
 	virtual ~CAsuro();
 
@@ -86,7 +91,7 @@ private:
 
 public:
 	bool m_ASUROCancel;
-	int m_ASUROCOMPort;
+	char m_ASUROCOMPort[255];
 	char m_ASUROfileName[1024];
 	char m_ASUROIniPath[1024];
 

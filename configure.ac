@@ -1,5 +1,5 @@
 AC_PREREQ([2.63])
-AC_INIT([asuroflash], [1.1], [asuro-bug@li-pro.net])
+AC_INIT([asuroflash], [1.2-devel], [asuro-bug@li-pro.net])
 AM_INIT_AUTOMAKE([1.10 dist-bzip2 dist-zip])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/Con_Flash.cpp])

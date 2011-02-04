@@ -47,8 +47,9 @@ class CWinSerial : public CSerial
 public:
 	CWinSerial();
 	virtual ~CWinSerial();
-	bool Open(unsigned int port);
+	bool Open(char* port);
 	void Close(void);
+  bool Scan(char* port, unsigned short number, unsigned short mode);
 	void ClearBuffer(void);
 	int Read(char* data, unsigned int length);
 	int Write(char* data, unsigned int length);

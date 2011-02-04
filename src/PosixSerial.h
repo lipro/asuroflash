@@ -2,8 +2,8 @@
                                PosixSerial.h
                            -------------------
     begin                : Die Aug 12 10:16:57 CEST 2003
-    copyright            : (C) 2003 DLR RM by Jan Grewe
-    email                : jan.grewe@dlr.de
+    copyright            : (C) 2003-2004 DLR RM by Jan Grewe
+    email                : jan.grewe@gmx.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,6 +19,7 @@
 	Ver      date       Author        comment
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
+  1.1   27.08.2004    Jan Grewe     find possible interfaces
  ***************************************************************************/ 
 #ifndef POSIXSERIAL_H
 #define POSIXSERIAL_H
@@ -47,8 +48,9 @@ class CPosixSerial : public CSerial
 public:
 	CPosixSerial();
 	virtual ~CPosixSerial();
-	bool Open(unsigned int port);
+	bool Open(char* port);
 	void Close(void);
+  bool Scan(char* port, unsigned short number, unsigned short mode);
 	void ClearBuffer(void);
 	int Read(char* data, unsigned int length);
 	int Write(char* data, unsigned int length);

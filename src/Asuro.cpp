@@ -2,11 +2,12 @@
              Asuro.cpp  -  Main Class for ASURO Flash Tools
                              -------------------
     begin                : Die Aug 12 10:16:57 CEST 2003
-    copyright            : (C) 2003 DLR RM by Jan Grewe
-    email                : jan.grewe@dlr.de
+    copyright            : (C) 2003-2004 DLR RM by Jan Grewe
+    email                : jan.grewe@gmx.de
  ***************************************************************************/
 
 /***************************************************************************
+
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,7 +19,8 @@
 	Ver      date       Author        comment
   -------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
-	1.1	  11.12.2003    Jan Grewe     fixed error m_endPage 
+	1.1	  11.12.2003    Jan Grewe     fixed error m_endPage
+	1.2   27.08.2004    Jan Grewe     Port Scan included
  ***************************************************************************/ 
 #include "Asuro.h"
 
@@ -38,8 +40,8 @@ CWinSerial Serial;
 CAsuro::CAsuro()
 {
 	memset(m_ASUROfileName,0x00,sizeof(m_ASUROfileName));
+	memset(m_ASUROCOMPort,0x00,sizeof(m_ASUROCOMPort));
 	m_ASUROCancel = false;
-	m_ASUROCOMPort = 0;
 	m_MaxTry = 10;
 	m_TimeoutConnect = 10;
 	m_TimeoutFlash = 1;
@@ -53,14 +55,15 @@ bool CAsuro::InitCAsuro(void)
 
 	if (m_ASUROIniPath[0] != '\0') fp = fopen(m_ASUROIniPath,"r");
 	if (fp != NULL) {
+
 		rewind(fp);
 		while (readLine(line,fp) != EOF) {
 			switch (lineCount) {
-				case 0: memcpy(m_ASUROfileName,line,strlen(line) -1);
-				case 1: sscanf(line,"%d",&m_ASUROCOMPort);
-				case 2: sscanf(line,"%d",(int *)&m_TimeoutConnect);
-				case 3: sscanf(line,"%d",(int *)&m_TimeoutFlash);
-				case 4: sscanf(line,"%d",(int*)&m_MaxTry); 
+				case 0: memcpy(m_ASUROfileName,line,strlen(line) -1); break;
+				case 1: memcpy(m_ASUROCOMPort,line,strlen(line) -1); break;
+				case 2: sscanf(line,"%d",(int *)&m_TimeoutConnect); break;
+				case 3: sscanf(line,"%d",(int *)&m_TimeoutFlash); break;
+				case 4: sscanf(line,"%d",(int *)&m_MaxTry); break; 
 			}
 			lineCount ++;
 		}
@@ -77,7 +80,8 @@ CAsuro::~CAsuro()
 	if (fp != NULL) {
 		if (m_ASUROfileName == "") fprintf(fp,"Hex Filename \n");
 		else fprintf(fp,"%s\n",m_ASUROfileName);
-		fprintf(fp,"%d \t\t#Com Port (0 - 1)\n",m_ASUROCOMPort);
+ 		if (m_ASUROCOMPort == "") fprintf(fp,"Interface \n");
+		else fprintf(fp,"%s\n",m_ASUROCOMPort);
 		fprintf(fp,"%d \t\t#Timeout Connect\n",m_TimeoutConnect);
 		fprintf(fp,"%d \t\t#Timeout Flash ('t')\n",m_TimeoutFlash);
 		fprintf(fp,"%d \t\t#MaxTry for flashing\n",m_MaxTry);
@@ -96,8 +100,12 @@ bool CAsuro::Init()
 	return true;
 }
 
-bool CAsuro::Connect()
+bool CAsuro::PortScan(char* portName, unsigned short number, unsigned short mode)
+{
+  return Serial.Scan(portName,number,mode);
+}
 
+bool CAsuro::Connect()
 {
 	char buf[11] = {0,0,0,0,0,0,0,0,0,'\0'};
 	Serial.ClearBuffer();
@@ -171,6 +179,7 @@ bool CAsuro::BuildRAM()
 					ErrorText((char*)"HEX file line length ERROR !");
 					return false;
 				} 
+
 				for ( i = 0; i < recordLength; i++) {
 					sscanf(&line[9 + i*2],"%02X",&data);
 					cksum += data;
@@ -232,6 +241,7 @@ bool CAsuro::SendPage()
 		for (j = 0; j < m_MaxTry; j ++) {
 			memset(getData,0x00,3);
 			Serial.Write(sendData,PAGE_SIZE);
+			Serial.ClearBuffer();
 			if ( i == m_endPage + 1) {
 				MessageText((char*)""); // just for \n
 				SuccessText((char*)"All Pages flashed !!");
@@ -242,26 +252,26 @@ bool CAsuro::SendPage()
 			}
 			time(&t1);
 			time(&t2);
-			Serial.ClearBuffer();
 			do {
 				time(&t2);
 				if (m_ASUROCancel == true) {
 					ErrorText((char*)"Cancel !");
 					return false;
 				}
+        Serial.Read(getData,2);
+				Serial.ClearBuffer();
 				ViewUpdate();
-				Serial.Read(getData,2);
 			} while ((strcmp(getData,"CK") != 0) &&
 					 (strcmp(getData,"OK") != 0) &&
 					 (strcmp(getData,"ER") != 0) &&
 					 difftime(t2,t1) <= m_TimeoutFlash);
-
 			Progress(i*100/(m_endPage - m_startPage + 1));
-			TimeWait(200);
-
-			if (getData[0] == 'O' && getData[1] == 'K') {
+#ifdef LINUX
+      TimeWait(350);
+#endif
+      if (getData[0] == 'O' && getData[1] == 'K') {
 				SuccessText((char*)" flashed !");
-				break; // Page erfolgreich gesendet
+				break; // Page sended succssesfull
 			}
 			if (i <= m_endPage) {
 				if (getData[0] == 'C' && getData[1] == 'K') WarningText((char*)"c"); 
@@ -269,6 +279,7 @@ bool CAsuro::SendPage()
 				else WarningText((char*)"t");  
 			}
 		}
+
 		if (j == m_MaxTry) {
 			MessageText((char*)""); // just for \n
 			ErrorText((char*)"TIMEOUT !");	
@@ -282,10 +293,13 @@ bool CAsuro::SendPage()
 
 void CAsuro::Programm()
 {
+char tmp[255];
 	m_ASUROCancel = false;
 	Progress(0);
-	Status((char*)"Try to initialise Serial Port !");
-	MessageText((char*)"Open Serial Port --> ");
+	sprintf(tmp,"Try to initialise %s ",m_ASUROCOMPort);
+	Status(tmp);
+	sprintf(tmp,"Open %s --> ",m_ASUROCOMPort);  
+	MessageText(tmp);
 	ViewUpdate();
 	if (Init()) {
 		Status((char*)"Building  RAM !" );
@@ -304,9 +318,13 @@ void CAsuro::Programm()
 		}
 		else Status((char*)"Building  RAM failed !" );
 	}
-	else Status((char*)"Can't initialise COM Port !" );
+	else {
+    sprintf(tmp,"Can't initialise %s !",m_ASUROCOMPort);
+    Status(tmp);
+  }
 	Serial.Close();
 }
+
 
 unsigned int CAsuro::CRC16(unsigned int crc, unsigned char data)
 {
@@ -343,6 +361,7 @@ const unsigned int CRCtbl[ 256 ] = {
    0x4E00, 0x8EC1, 0x8F81, 0x4F40, 0x8D01, 0x4DC0, 0x4C80, 0x8C41,   
    0x4400, 0x84C1, 0x8581, 0x4540, 0x8701, 0x47C0, 0x4680, 0x8641,   
    0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040 }; 
+
    return ( crc >> 8 ) ^ CRCtbl[ ( crc & 0xFF ) ^ data];     
 }
 

@@ -36,7 +36,7 @@ CWinSerial::~CWinSerial()
 
 }
 
-bool CWinSerial::Open(unsigned int port)
+bool CWinSerial::Open(char* port)
 {
 // TODO: adapot function to Windows
 #if 0
@@ -44,12 +44,12 @@ char text[256];
 #endif
 
 #ifdef WINDOWS
-	sprintf(m_portName,"COM%d",port);
 #else
 #error Wrong OS only Windows implemented
 #endif
 // TODO: adapot function to Windows
 #if 0
+  strcpy(m_portName,port);
 	m_portHandle = open ((const char*)m_portName, O_RDWR | O_NOCTTY);
 	if (m_portHandle == -1) {
 		sprintf(text,"Could not open %s\nAlready in use ?!?!\n",m_portName);
@@ -90,8 +90,34 @@ void CWinSerial::Close(void)
 #endif
 }
 
+bool CWinSerial::Scan(char* port,unsigned short number,unsigned short mode)
+{
+int ret = false;
+  if (mode == SERIAL) sprintf(m_portName,"COM%d",number);
+  if (mode == USB) sprintf(m_portName,"COM%d",number);
+// TODO: adapot function to Windows
+#if 0
+  m_portHandle = open ((const char*)m_portName, O_RDWR | O_NOCTTY);
+  if (m_portHandle != -1) {
+    if(!(tcgetattr(m_portHandle, &CommConfig))) {
+      strcpy(port,m_portName);
+      ret = true;
+    }
+  }
+  Close();
+  return ret;
+#else
+  ret = true;
+  return ret;
+#endif
+}
+
 void CWinSerial::ClearBuffer(void)
 {
+//  tcflush(m_portHandle,TCIFLUSH);
+//  tcflush(m_portHandle,TCOFLUSH);
+//  tcflush(m_portHandle,TCIOFLUSH);
+
 }
 
 int CWinSerial::Read(char* data, unsigned int length)
@@ -145,6 +171,10 @@ void CWinSerial::Timeout(unsigned int timeout) //msec
 
 void CWinSerial::MyMessageBox(char* Text)
 {
+#if defined _CONSOLE
 	std::cout << Text << std::endl;
+#else
+#error Must be CONSOLE Applikation
+#endif
 }
 	

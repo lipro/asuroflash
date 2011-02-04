@@ -2,8 +2,8 @@
              PosixSerial.cpp - Serial Communictaion in Posix standard
                              -------------------
     begin                : Die Aug 12 10:16:57 CEST 2003
-    copyright            : (C) 2003 DLR RM by Jan Grewe
-    email                : jan.grewe@dlr.de
+    copyright            : (C) 2003-2004 DLR RM by Jan Grewe
+    email                : jan.grewe@gmx.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,10 +19,12 @@
 	Ver      date       Author        comment
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
+  1.1   27.08.2004    Jan Grewe     find possible interfaces
  ***************************************************************************/ 
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
+#include <string.h>
 
 #include "PosixSerial.h"
 
@@ -36,12 +38,11 @@ CPosixSerial::~CPosixSerial()
 
 }
 
-bool CPosixSerial::Open(unsigned int port)
+bool CPosixSerial::Open(char* port)
 {
 char text[256];
 
 #ifdef LINUX
-	sprintf(m_portName,"/dev/ttyS%d",port);
 /*
 #elif defined(Q_OS_IRIX)  || defined(_OS_IRIX_)
 	sprintf(portName,"/dev/ttyf%d",port+1);
@@ -55,7 +56,8 @@ char text[256];
 #else
 #error Wrong OS only LINUX implemented
 #endif
-	m_portHandle = open ((const char*)m_portName, O_RDWR | O_NOCTTY);
+  strcpy(m_portName,port);
+  m_portHandle = open ((const char*)m_portName, O_RDWR | O_NOCTTY);
 	if (m_portHandle == -1) {
 		sprintf(text,"Could not open %s\nAlready in use ?!?!\n",m_portName);
 		MyMessageBox(text);
@@ -89,9 +91,30 @@ void CPosixSerial::Close(void)
 	close(m_portHandle);
 }
 
+bool CPosixSerial::Scan(char* port,unsigned short number,unsigned short mode)
+{
+int ret = false;
+  if (mode == SERIAL) sprintf(m_portName,"/dev/ttyS%d",number);
+  if (mode == USB) sprintf(m_portName,"/dev/ttyUSB%d",number);
+  m_portHandle = open ((const char*)m_portName, O_RDWR | O_NOCTTY);
+  if (m_portHandle != -1) {
+    if(!(tcgetattr(m_portHandle, &CommConfig))) {
+      strcpy(port,m_portName);
+      ret = true;
+    }
+  }
+  Close();
+  return ret;
+}
+
 void CPosixSerial::ClearBuffer(void)
 {
+//  tcflush(m_portHandle,TCIFLUSH);
+//  tcflush(m_portHandle,TCOFLUSH);
+//  tcflush(m_portHandle,TCIOFLUSH);
+
 }
+
 
 int CPosixSerial::Read(char* data, unsigned int length)
 {

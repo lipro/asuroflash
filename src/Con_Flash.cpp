@@ -80,32 +80,17 @@ int main(int argc, char* argv[])
 		}
 		else {
 #ifdef LINUX
-			std::cout << "Start ASURO Flash on ttyS" << Asuro.m_ASUROCOMPort << 
+			std::cout << "Start ASURO Flash on " << Asuro.m_ASUROCOMPort << 
 			" flashing " << Asuro.m_ASUROfileName << std::endl;
 #elif defined WINDOWS
-			std::cout << "Start ASURO Flash on COM" << Asuro.m_ASUROCOMPort + 1 << 
+			std::cout << "Start ASURO Flash on " << Asuro.m_ASUROCOMPort << 
 			" flashing " << Asuro.m_ASUROfileName << std::endl;
 #endif
 			Asuro.InitCAsuro();
 		}
 	}
-	if (argc == 3) {
-		if (!strcmp(argv[1],"-COM1") || !strcmp(argv[1],"-ttyS0") || !strcmp(argv[1],"-0")) 
-			Asuro.m_ASUROCOMPort = 0;
-		else if (!strcmp(argv[1],"-COM2") || !strcmp(argv[1],"-ttyS1") || !strcmp(argv[1],"-2")) 
-			Asuro.m_ASUROCOMPort = 1;
-#ifdef LINUX
-		else if (!strcmp(argv[1],"-1")) Asuro.m_ASUROCOMPort = 1;
-#elif defined WINDOWS
-		else if (!strcmp(argv[1],"-1")) Asuro.m_ASUROCOMPort = 0;
-#endif
-		else {
-			std::cout << "Wrong serial port " << argv[1] <<std::endl;
-			showHelp();
-			// Write no ini File
-			Asuro.m_ASUROIniPath[0] = '\0';
-			return -1;
-		} 
+	if (argc == 3) { 
+		strcpy(Asuro.m_ASUROCOMPort,argv[1]);
 		strcpy(Asuro.m_ASUROfileName,argv[2]);
 	}
 	Asuro.Programm();
@@ -116,12 +101,12 @@ int main(int argc, char* argv[])
 
 void showHelp(void)
 {
-	std::cout << " -[SerialPort] [filename]" << std::endl;
+	std::cout << " [SerialPort] [filename]" << std::endl;
 	std::cout << "no options : try to read parameter from .ini file" << std::endl; 
 #ifdef LINUX
-	std::cout << "SerialPort : ttyS0 ttyS1" << std::endl;
+	std::cout << "SerialPort : /dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0 ..." << std::endl;
 #elif defined WINDOWS
-	std::cout << "SerialPort : COM1 COM2" << std::endl;
+	std::cout << "SerialPort : COM1 COM2 ..." << std::endl;
 #endif
 	std::cout << "filename   : complete Path to *.hex file which should be flashed" << std::endl;
 	std::cout << "if all parameter are checked .ini file will be generated" << std::endl << std::endl; 
