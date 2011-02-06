@@ -25,10 +25,10 @@ qasuroflash_LDADD = \
 	$(QT3_LIBS)
 
 qasuroflash_SOURCES = \
-	Main.cpp \
-	Picture.h \
+	Qt_Flash.cpp \
 	Qt_FlashDialog.cpp \
 	Qt_FlashDialog.h \
+	Picture.h \
 	Asuro.cpp \
 	Asuro.h \
 	PosixSerial.cpp \
