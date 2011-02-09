@@ -1,6 +1,6 @@
 /***************************************************************************
-                    ANSIAsuro.cpp  -  Interface ASURO Console Flash
-                             -------------------
+                            Con_FlashDialog.h
+                           -------------------
     begin                : Die Aug 12 10:16:57 CEST 2003
     copyright            : (C) 2003 DLR RM by Jan Grewe
     email                : jan.grewe@dlr.de
@@ -12,63 +12,31 @@
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
  +   any later version.                                                    *
+ *                                                                         *
  ***************************************************************************/
 
 /***************************************************************************
 	Ver      date       Author        comment
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
- ***************************************************************************/ 
-#include "ANSIAsuro.h"
-#ifdef WINDOWS
-#include <windows.h>
+ ***************************************************************************/
+#ifndef ANSIASURO_H
+#define ANSIASURO_H
+
+#include "Asuro.h"
+
+class Con_FlashDialog : public CAsuro  
+{
+	public:
+		Con_FlashDialog();
+		virtual ~Con_FlashDialog();
+		void MessageText(char* text);
+		void WarningText(char* text);
+		void SuccessText (char* text);
+		void ErrorText(char* text);
+		void Progress(unsigned int progress);
+		void TimeWait(unsigned int time); // msec
+
+		char m_iniPathName[1024];
+};
 #endif
-#ifdef LINUX
-#include <unistd.h>
-#endif
-#include <iostream>
-
-
-CANSIAsuro::CANSIAsuro()
-{
-
-}
-
-CANSIAsuro::~CANSIAsuro()
-{
-
-}
-
-void CANSIAsuro::Progress(unsigned int progress)
-{
-	std::cout << "." << std::flush;
-}
-
-void CANSIAsuro::TimeWait(unsigned int time) // msec
-{
-#ifdef WINDOWS
-	Sleep(time);
-#elif defined LINUX
-	usleep(time * 1000);
-#endif
-}
-
-void CANSIAsuro::MessageText(char* text)
-{
-	std::cout << std::endl << text << std::flush;
-}
-
-void CANSIAsuro::WarningText(char* text)
-{
-	std::cout << text << std::flush;
-}
-
-void CANSIAsuro::SuccessText (char* text)
-{
-	std::cout << text << std::flush;
-}
-
-void CANSIAsuro::ErrorText(char* text)
-{
-	std::cout << text << std::flush;
-}

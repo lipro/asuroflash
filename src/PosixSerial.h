@@ -34,13 +34,6 @@
 #include <sys/ioctl.h>
 #include <sys/select.h>
 
-#if defined LINUX || defined _LINUX || defined _LINUX_
-#define LINUX
-#endif
-
-#ifdef _QT
-#include <qmessagebox.h>
-#endif
 #include "Serial.h"
 
 class CPosixSerial : public CSerial
@@ -65,5 +58,6 @@ class CPosixSerial : public CSerial
 		char m_portName[256];
 
 };
-#endif
+
+#endif /* POSIXSERIAL_H */
 

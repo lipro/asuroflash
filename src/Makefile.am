@@ -6,8 +6,8 @@ EXTRA_DIST = \
 
 asuroflash_SOURCES = \
 	Con_Flash.cpp \
-	ANSIAsuro.cpp \
-	ANSIAsuro.h \
+	Con_FlashDialog.cpp \
+	Con_FlashDialog.h \
 	Asuro.cpp \
 	Asuro.h \
 	PosixSerial.cpp \

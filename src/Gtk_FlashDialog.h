@@ -74,4 +74,5 @@ class Gtk_FlashDialog: public Gtk::Window, public CAsuro
 		void text_view_size_request(Gtk::Requisition *req);
 		void text_buffer_print(Glib::ustring message, Glib::ustring tag);
 };
-#endif
+
+#endif /* GTK_FLASHDIALOG_H */

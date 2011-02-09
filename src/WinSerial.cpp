@@ -168,10 +168,6 @@ void CWinSerial::Timeout(unsigned int timeout) //msec
 
 void CWinSerial::MyMessageBox(char* Text)
 {
-#if defined _CONSOLE
 	std::cout << Text << std::endl;
-#else
-#error Must be CONSOLE Applikation
-#endif
 }
 

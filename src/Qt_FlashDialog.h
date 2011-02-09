@@ -20,8 +20,8 @@
 	1.0   12.08.2003    Jan Grewe     build
   1.1   27.08.2004    Jan Grewe     find possible interfaces
  ***************************************************************************/
-#ifndef FLASH_H
-#define FLASH_H
+#ifndef QT_FLASHDIALOG_H
+#define QT_FLASHDIALOG_H
 
 #include <qapplication.h>
 #include <qvariant.h>
@@ -99,4 +99,4 @@ class QT_FlashDialog : public QDialog, public CAsuro
 		void slotNewFileName (const QString &);
 };
 
-#endif // FLASH_H
+#endif /* QT_FLASHDIALOG_H */

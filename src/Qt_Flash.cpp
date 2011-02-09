@@ -20,6 +20,7 @@
 	1.0   12.08.2003    Jan Grewe     build
  ***************************************************************************/ 
 #include <qapplication.h>
+
 #include "Qt_FlashDialog.h"
 
 

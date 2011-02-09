@@ -20,7 +20,6 @@
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
  ***************************************************************************/ 
-#include "ANSIAsuro.h"
 #ifdef WINDOWS
 #include <windows.h>
 #endif
@@ -30,9 +29,11 @@
 
 #include <iostream>
 
+#include "Con_FlashDialog.h"
+
 void showHelp(void);
 
-CANSIAsuro Asuro;
+Con_FlashDialog Asuro;
 
 int main(int argc, char* argv[])
 {

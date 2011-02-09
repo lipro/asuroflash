@@ -21,8 +21,12 @@
 	1.0   12.08.2003    Jan Grewe     build
   1.1   27.08.2004    Jan Grewe     find possible interfaces
  ***************************************************************************/ 
-#ifndef _SERIAL_H_
-#define _SERIAL_H_
+#ifndef SERIAL_H
+#define SERIAL_H
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #define SERIAL  0
 #define USB     1
@@ -42,4 +46,4 @@ class CSerial
 		char m_Port[255];
 };
 
-#endif
+#endif /* SERIAL_H */

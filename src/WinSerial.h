@@ -67,5 +67,6 @@ class CWinSerial : public CSerial
 		char m_portName[256];
 
 };
-#endif
+
+#endif /* WINSERIAL_H */
 

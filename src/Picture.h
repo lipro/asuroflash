@@ -19,6 +19,8 @@
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
  ***************************************************************************/ 
+#ifndef PICTURE_H
+#define PICTURE_H
 
 static const char* const logo_data[] = {
 "82 69 2 1",
@@ -135,3 +137,5 @@ static const char* const icon_data[] = {
 "....eeeeeeeee.........dddddddd..",
 ".....eeeeeee...........dddddd...",
 "......eeeee.............dddd...."};
+
+#endif /* PICTURE_H */

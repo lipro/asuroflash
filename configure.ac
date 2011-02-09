@@ -18,16 +18,12 @@ AC_SUBST(BUILDDATE)
 
 AC_CANONICAL_HOST
 
-# Setup defaults.
-CPPFLAGS="-D_CONSOLE $CPPFLAGS"
-
 # Check system type.
 AC_MSG_CHECKING([checking system type])
 case "$host_os" in
 linux*)
 	AC_MSG_RESULT([Linux])
 	AC_DEFINE_UNQUOTED(LINUX,1,[This is a Linux system])
-	CPPFLAGS="-D_LINUX_ $CPPFLAGS"
 	;;
 *)
 	AC_MSG_RESULT(Unrecognised OS $host_os)

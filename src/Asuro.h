@@ -24,12 +24,12 @@
 #ifndef ASURO_H
 #define ASURO_H
 
-#if defined WIN32 || defined _WIN32 || defined _WIN32_
-#define WINDOWS
+#ifdef HAVE_CONFIG_H
+#include <config.h>
 #endif
 
-#if defined LINUX || defined _LINUX || defined _LINUX_
-#define LINUX
+#if defined WIN32 || defined _WIN32 || defined _WIN32_
+#define WINDOWS
 #endif
 
 #include <stdio.h>
@@ -45,7 +45,7 @@
 
 static const char*  ASUROAbout = "\
 ASURO Flash Tool\n\
-Version 1.2.1\n\
+Version " VERSION "\n\
 (c)2011 Li-Pro.Net\n\
 (c)2003-2004 DLR RM";
 
@@ -104,4 +104,5 @@ class CAsuro
 		unsigned int m_startPage,m_endPage;
 		unsigned char m_RAM[MAX_PAGE][PAGE_SIZE - 3]; //-1PageNo -2CRC16 
 };
-#endif
+
+#endif /* ASURO_H */

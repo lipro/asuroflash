@@ -138,12 +138,6 @@ void CPosixSerial::Timeout(unsigned int timeout) //msec
 
 void CPosixSerial::MyMessageBox(char* Text)
 {
-#ifdef _QT 
-	QMessageBox::critical(NULL,"ASURO Flash",Text,"Quit",0);
-#elif defined _CONSOLE
 	std::cout << Text << std::endl;
-#else
-#error Must be QT or CONSOLE Applikation
-#endif
 }
 
