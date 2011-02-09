@@ -45,12 +45,14 @@
 
 static const char*  ASUROAbout = "\
 ASURO Flash Tool\n\
-Version 1.2\n\
-Author: Jan Grewe\n\
-(c)DLR 2003-2004";
+Version 1.2.1\n\
+(c)2011 Li-Pro.Net\n\
+(c)2003-2004 DLR RM";
 
 static const char*  LICENSE = "\
-ASURO Flash Copyright (c)2003-2004 DLR RM\n\
+ASURO Flash\n\
+Copyright (c)2003-2004 DLR RM\n\
+Copyrigth (c)2011 Li-Pro.Net\n\n\
 ASURO Flash comes with\n\
 ABSOLUTELY NO WARRANTY \n\
 This program is free software\n\
