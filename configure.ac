@@ -40,6 +40,7 @@ AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_CXX
 AC_PROG_INSTALL
+PKG_PROG_PKG_CONFIG
 
 # Checks for libraries.
 #REQUIRES_LIBANY="anylib >= 0.0-0"
@@ -80,7 +81,7 @@ AM_CONDITIONAL(HAVE_QT3, test "x$HAVE_QT3" = "xyes")
 # Check for Qt 4
 #
 AC_ARG_ENABLE(qt4,
-	AS_HELP_STRING([--enable-qt4],[Disable building of Qt4Core frontend]),
+	AS_HELP_STRING([--enable-qt4],[Enable building of Qt4Core frontend (not yet)]),
 	[case "${enableval}" in
 		yes) HAVE_QT4=yes ;;
 		no)  HAVE_QT4=no ;;
@@ -107,22 +108,30 @@ fi
 AM_CONDITIONAL(HAVE_QT4, test "x$HAVE_QT4" = "xyes")
 
 #
-# Check for GTK+ 2.0
+# Check for GTK+ 2.0 and C++ wrapper for GTK+ 2.0
 #
 AC_ARG_ENABLE(gtk,
-	AS_HELP_STRING([--enable-gtk],[Disable use of GTK+ 2]),
+	AS_HELP_STRING([--disable-gtk],[Disable building of GTK+ 2 frontend]),
 	[case "${enableval}" in
 		yes) HAVE_GTK=yes ;;
 		no)  HAVE_GTK=no ;;
 		*) AC_MSG_ERROR(bad value ${enableval} for --enable-gtk) ;;
 	esac],
-	[HAVE_GTK=no])
+	[HAVE_GTK=yes])
 
 if test "x$HAVE_GTK" = "xyes" ; then
 	# Check for GTK 2.0
-	PKG_CHECK_MODULES(GTK20, [ gtk+-2.0 >= 2.14.0 ])
+	PKG_CHECK_MODULES( GTK20, [ gtk+-2.0 >= 2.14.0 ])
 	AC_SUBST(GTK20_CFLAGS)
 	AC_SUBST(GTK20_LIBS)
+	# Check for C++ wrapper for GTK 2.0
+	PKG_CHECK_MODULES( GTKMM24, [ gtkmm-2.4 >= 2.14.0 ])
+	AC_SUBST(GTKMM24_CFLAGS)
+	AC_SUBST(GTKMM24_LIBS)
+	# Check for Thread support for GLib
+	PKG_CHECK_MODULES( GTHREAD, [ gthread-2.0 >= 2.14.0 ])
+	AC_SUBST(GTHREAD_CFLAGS)
+	AC_SUBST(GTHREAD_LIBS)
 fi
 AM_CONDITIONAL(HAVE_GTK, test "x$HAVE_GTK" = "xyes")
 
@@ -130,7 +139,7 @@ AM_CONDITIONAL(HAVE_GTK, test "x$HAVE_GTK" = "xyes")
 # Check for GTK+ 3.0
 #
 AC_ARG_ENABLE(gtk3,
-	AS_HELP_STRING([--enable-gtk3],[Disable use of GTK+ 3]),
+	AS_HELP_STRING([--enable-gtk3],[Enable building of GTK+ 3 frontend (not yet)]),
 	[case "${enableval}" in
 		yes) HAVE_GTK3=yes ;;
 		no)  HAVE_GTK3=no ;;
@@ -140,7 +149,7 @@ AC_ARG_ENABLE(gtk3,
 
 if test "x$HAVE_GTK3" = "xyes" ; then
 	# Check for GTK 3.0
-	PKG_CHECK_MODULES(GTK30, [ gtk+-3.0 ])
+	PKG_CHECK_MODULES( GTK30, [ gtk+-3.0 ])
 	AC_SUBST(GTK30_CFLAGS)
 	AC_SUBST(GTK30_LIBS)
 fi
