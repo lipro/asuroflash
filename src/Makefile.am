@@ -15,6 +15,32 @@ asuroflash_SOURCES = \
 	Serial.cpp \
 	Serial.h
 
+if HAVE_GTK
+bin_PROGRAMS += gasuroflash
+
+gasuroflash_CPPFLAGS = \
+	$(GTK20_CFLAGS) \
+	$(GTKMM24_CFLAGS) \
+	$(GTHREAD_CFLAGS)
+
+gasuroflash_LDADD = \
+	$(GTK20_LIBS) \
+	$(GTKMM24_LIBS) \
+	$(GTHREAD_LIBS)
+
+gasuroflash_SOURCES = \
+	Gtk_Flash.cpp \
+	Gtk_FlashDialog.cpp \
+	Gtk_FlashDialog.h \
+	Asuro.cpp \
+	Asuro.h \
+	PosixSerial.cpp \
+	PosixSerial.h \
+	Serial.cpp \
+	Serial.h
+
+endif # HAVE_GTK
+
 if HAVE_QT3
 bin_PROGRAMS += qasuroflash
 
