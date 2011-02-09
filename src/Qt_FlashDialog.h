@@ -26,6 +26,9 @@
 #include <qapplication.h>
 #include <qvariant.h>
 #include <qdialog.h>
+#include <qimage.h>
+#include <qpixmap.h>
+
 #include "Picture.h"
 #include "Asuro.h"
 

@@ -42,7 +42,7 @@ QT_FlashDialog::QT_FlashDialog( QWidget* parent,  const char* name, bool modal, 
 {
 	char portName[256];
 
-	QPixmap image0( ( const char** ) image0_data );
+	QPixmap image0( ( const char** ) logo_data );
 
 	setName( "ASURO Flash Tool" );
 	setFixedSize(392, 422);

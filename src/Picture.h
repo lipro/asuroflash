@@ -19,10 +19,8 @@
 	--------------------------------------------------------------------------
 	1.0   12.08.2003    Jan Grewe     build
  ***************************************************************************/ 
-#include <qimage.h>
-#include <qpixmap.h>
 
-static const char* const image0_data[] = {
+static const char* const logo_data[] = {
 "82 69 2 1",
 "# c #0000ff",
 ". c None",
