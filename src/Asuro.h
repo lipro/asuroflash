@@ -43,14 +43,14 @@
 
 #define HEX_HEADER 1+2+4+2+2 // : + recordLength + address + type + chksum
 
-static const char*  ASUROAbout = "\
-ASURO Flash Tool\n\
-Version " VERSION "\n\
+static const char*  ASUROAbout = \
+PACKAGE_NAME "\n\
+Version " PACKAGE_VERSION "\n\
 (c)2011 Li-Pro.Net\n\
 (c)2003-2004 DLR RM";
 
-static const char*  LICENSE = "\
-ASURO Flash\n\
+static const char*  LICENSE = \
+PACKAGE_STRING "\n\
 Copyright (c)2003-2004 DLR RM\n\
 Copyrigth (c)2011 Li-Pro.Net\n\n\
 ASURO Flash comes with\n\

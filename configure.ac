@@ -6,17 +6,32 @@
 # use: autoreconf -i
 
 AC_PREREQ([2.63])
-AC_INIT([asuroflash], [1.2.1-devel-gtk], [asuro-bug@li-pro.net])
-AM_INIT_AUTOMAKE([1.10 dist-bzip2 dist-zip])
-AM_MAINTAINER_MODE
+AC_INIT([ASURO Flash Tool],
+	[1.2.1-devel-gtk],
+	[asuro-bug@li-pro.net],
+	[asuroflash],
+	[http://www.li-pro.de/robo:asuro:asuroflash:start])
+
+AC_CANONICAL_SYSTEM
+AC_GNU_SOURCE
+
 AC_CONFIG_SRCDIR([src/Con_Flash.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
+AM_INIT_AUTOMAKE([1.10 dist-bzip2 dist-zip])
+AM_MAINTAINER_MODE
+
+AC_PREFIX_DEFAULT("/usr/local")
+
+# Create build informations
 BUILDDATE=`date +%Y-%m-%d`
 AC_SUBST(BUILDDATE)
+AC_DEFINE_UNQUOTED(BUILDDATE,"$BUILDDATE",[Build date of package])
 
-AC_CANONICAL_HOST
+BUILDTIME=`date +%H:%M:%S-%Z`
+AC_SUBST(BUILDTIME)
+AC_DEFINE_UNQUOTED(BUILDTIME,"$BUILDTIME",[Build date of package])
 
 # Check system type.
 AC_MSG_CHECKING([checking system type])

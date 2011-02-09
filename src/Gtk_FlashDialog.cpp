@@ -22,10 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA  02110-1301  USA
  */
+
 #include "Gtk_FlashDialog.h"
 
-#include <gtkmm/icontheme.h>
-#include <sys/stat.h>
 #include <string.h>
 
 #define TTYS   0
@@ -33,7 +32,7 @@
 
 Gtk_FlashDialog::Gtk_FlashDialog()
 {
-	this->set_title("ASURO Flash Tool");
+	this->set_title(PACKAGE_STRING);
 	this->set_default_size(392, 472);
 	this->set_border_width(5);
 	this->set_resizable(true); /* TODO: chenge to false */

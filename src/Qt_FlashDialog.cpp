@@ -44,9 +44,9 @@ QT_FlashDialog::QT_FlashDialog( QWidget* parent,  const char* name, bool modal, 
 
 	QPixmap image0( ( const char** ) logo_data );
 
-	setName( "ASURO Flash Tool" );
+	setName( PACKAGE_STRING );
 	setFixedSize(392, 422);
-	setCaption( "ASURO Flash Tool" );
+	setCaption( PACKAGE_STRING );
 
 	PixmapLabel1 = new QLabel( this, "PixmapLabel1" );
 	PixmapLabel1->setGeometry( QRect( 150, 10, 82, 69 ) ); 

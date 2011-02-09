@@ -27,8 +27,6 @@
 #define GTK_FLASHDIALOG_H
 
 #include <gtkmm.h>
-#include <stdio.h>
-#include <iostream>
 
 #include "Picture.h"
 #include "Asuro.h"
